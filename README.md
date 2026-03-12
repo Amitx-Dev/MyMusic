@@ -20,3 +20,4 @@ A fully functional web-based music streaming player built with HTML, CSS, and Va
 3. Use the search bar or click on any of the loaded tracks to start listening. 
 *(Note: Requires an active internet connection to fetch the external music metadata and audio streams).*
 # MyMusic
+# MyMusic
