@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Music Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <i class="fas fa-bars menu-icon"></i>
+                <div class="logo">
+                    <i class="fab fa-youtube"></i>
+                    <span>Music</span>
+                </div>
+            </div>
+            <div class="nav-center">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search songs, albums, artists">
+                </div>
+            </div>
+            <div class="nav-right">
+                <i class="fas fa-chromecast"></i>
+                <div class="profile-pic">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile">
+                </div>
+            </div>
+        </nav>
+
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <ul class="nav-links">
+                    <li class="active"><i class="fas fa-home"></i> Home</li>
+                    <li><i class="fas fa-compass"></i> Explore</li>
+                    <li><i class="fas fa-book-open"></i> Library</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="nav-links">
+                    <li><i class="fas fa-plus-square"></i> New playlist</li>
+                    <li><i class="fas fa-heart"></i> Liked songs</li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="content-area">
+                <div class="categories">
+                    <button class="active">Relax</button>
+                    <button>Workout</button>
+                    <button>Combine</button>
+                    <button>Focus</button>
+                    <button>Energize</button>
+                    <button>Podcasts</button>
+                </div>
+
+                <section class="section">
+                    <div class="section-header">
+                        <div>
+                            <p class="subtitle">START RADIO FROM A SONG</p>
+                            <h2>Quick picks</h2>
+                        </div>
+                        <button class="play-all-btn">Play all</button>
+                    </div>
+                    <div class="song-grid" id="quickPicks">
+                        <!-- Dynamically populated -->
+                        <div style="padding: 20px;">Loading tracks...</div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <div class="section-header">
+                        <h2>Recommended music videos</h2>
+                    </div>
+                    <div class="video-grid" id="recommendedVideos">
+                         <!-- Dynamically populated -->
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Bottom Player -->
+        <div class="bottom-player">
+            <div class="player-left" id="playerInfo">
+                <img src="https://via.placeholder.com/50" alt="Album Art" id="playerImg">
+                <div class="song-details">
+                    <h4 id="playerTitle">Select a track</h4>
+                    <p id="playerArtist">-</p>
+                </div>
+                <i class="far fa-heart heart-icon"></i>
+            </div>
+            <div class="player-center">
+                <div class="controls">
+                    <i class="fas fa-random"></i>
+                    <i class="fas fa-step-backward" id="prevBtn"></i>
+                    <i class="fas fa-play play-pause-btn" id="mainPlayBtn"></i>
+                    <i class="fas fa-step-forward" id="nextBtn"></i>
+                    <i class="fas fa-redo"></i>
+                </div>
+                <div class="progress-container">
+                    <span id="currentTime">0:00</span>
+                    <div class="progress-bar-bg" id="progressBarBg">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+            <div class="player-right">
+                <i class="fas fa-volume-up"></i>
+                <div class="volume-bar-bg">
+                    <div class="volume-bar"></div>
+                </div>
+                <i class="fas fa-chevron-up"></i>
+            </div>
+        </div>
+    </div>
+    <audio id="audioPlayer"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
