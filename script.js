@@ -14,6 +14,8 @@ const searchInput = document.getElementById('searchInput');
 let currentTracks = [];
 let currentTrackIndex = -1;
 let isPlaying = false;
+let likedSongs = JSON.parse(localStorage.getItem('likedSongs')) || [];
+let playlists = JSON.parse(localStorage.getItem('playlists')) || [];
 
 // Format time in minutes:seconds
 function formatTime(seconds) {
@@ -193,6 +195,7 @@ function playTrack(index) {
     playerTitle.textContent = decodeHTML(track.title);
     playerArtist.textContent = decodeHTML(track.artist);
     
+    updateHeartIcon(track);
     updateBackgroundGradient(track.image);
 }
 
@@ -317,10 +320,97 @@ document.querySelector('.play-all-btn').addEventListener('click', () => {
 
 // Heart toggle
 document.querySelector('.heart-icon').addEventListener('click', function() {
-    this.classList.toggle('far');
-    this.classList.toggle('fas');
-    this.classList.toggle('active');
+    if (currentTrackIndex === -1) return;
+    
+    const currentTrack = currentTracks[currentTrackIndex];
+    const index = likedSongs.findIndex(s => s.url === currentTrack.url);
+    
+    if (index === -1) {
+        likedSongs.push(currentTrack);
+        this.classList.remove('far');
+        this.classList.add('fas', 'active');
+    } else {
+        likedSongs.splice(index, 1);
+        this.classList.remove('fas', 'active');
+        this.classList.add('far');
+    }
+    
+    localStorage.setItem('likedSongs', JSON.stringify(likedSongs));
 });
+
+// Update heart icon state when track changes
+function updateHeartIcon(track) {
+    const heartIcon = document.querySelector('.heart-icon');
+    const isLiked = likedSongs.some(s => s.url === track.url);
+    
+    if (isLiked) {
+        heartIcon.classList.remove('far');
+        heartIcon.classList.add('fas', 'active');
+    } else {
+        heartIcon.classList.remove('fas', 'active');
+        heartIcon.classList.add('far');
+    }
+}
+
+// Sidebar Navigation Logic
+const navItems = {
+    home: document.getElementById('navHome'),
+    explore: document.getElementById('navExplore'),
+    library: document.getElementById('navLibrary'),
+    newPlaylist: document.getElementById('navNewPlaylist'),
+    likedSongs: document.getElementById('navLikedSongs')
+};
+
+function setActiveNav(activeKey) {
+    Object.values(navItems).forEach(el => el.classList.remove('active'));
+    navItems[activeKey].classList.add('active');
+}
+
+navItems.home.addEventListener('click', () => {
+    setActiveNav('home');
+    fetchTracks('top tracks');
+});
+
+navItems.explore.addEventListener('click', () => {
+    setActiveNav('explore');
+    fetchTracks('new releases');
+});
+
+navItems.library.addEventListener('click', () => {
+    setActiveNav('library');
+    displayLocalTracks(likedSongs, "Your Library");
+});
+
+navItems.likedSongs.addEventListener('click', () => {
+    setActiveNav('likedSongs');
+    displayLocalTracks(likedSongs, "Liked Songs");
+});
+
+navItems.newPlaylist.addEventListener('click', () => {
+    const name = prompt("Enter playlist name:");
+    if (name) {
+        playlists.push({ name, tracks: [] });
+        localStorage.setItem('playlists', JSON.stringify(playlists));
+        alert(`Playlist "${name}" created!`);
+    }
+});
+
+function displayLocalTracks(tracks, title) {
+    currentTracks = tracks;
+    const sectionHeader = document.querySelector('.section h2');
+    const subtitle = document.querySelector('.subtitle');
+    
+    if (sectionHeader) sectionHeader.textContent = title;
+    if (subtitle) subtitle.textContent = "YOUR COLLECTION";
+    
+    if (tracks.length === 0) {
+        quickPicksContainer.innerHTML = '<div style="padding: 20px;">Empty collection. Start liking songs!</div>';
+        recommendedContainer.innerHTML = '';
+    } else {
+        renderQuickPicks(tracks.slice(0, 12));
+        renderRecommended(tracks.slice(12, 20));
+    }
+}
 
 // Initial load
 fetchTracks('top tracks');
