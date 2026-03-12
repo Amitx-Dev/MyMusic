@@ -2,6 +2,8 @@
 
 A fully functional web-based music streaming player built with HTML, CSS, and Vanilla JavaScript, designed to replicate the premium, dark-mode aesthetic of YouTube Music.
 
+live https://amitx-dev.github.io/MyMusic/
+
 ## Features
 - **Full Song Playback:** Integrates with a JioSaavn API wrapper to stream actual full-length audio tracks.
 - **Premium UI/UX:** Styled with glassmorphism effects, a responsive dark theme, and interactive category pills to perfectly mimic the real YouTube Music platform.
