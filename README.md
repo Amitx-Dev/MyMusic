@@ -21,3 +21,4 @@ A fully functional web-based music streaming player built with HTML, CSS, and Va
 *(Note: Requires an active internet connection to fetch the external music metadata and audio streams).*
 # MyMusic
 # MyMusic
+# MyMusic
